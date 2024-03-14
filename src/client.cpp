@@ -15,9 +15,9 @@ int main(int arc, char* argv[]) {
             std::string password;
 
             std::cout << "enter admin password: ";
-            set_sdin_echo(false);
+            set_stdin_echo(false);
             std::getline(std::cin, password);
-            set_sdin_echo(true);
+            set_stdin_echo(true);
 
             password = "auth:" + password;
             ssize_t sent = send(server.fd, password.data(), password.size(), 0);

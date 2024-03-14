@@ -37,4 +37,4 @@ void connect_to_server(const ServerInfo& server);
 
 std::vector<std::string> split_str(const std::string& str, char separator);
 
-void set_sdin_echo(bool enable);
+void set_stdin_echo(bool enable);
