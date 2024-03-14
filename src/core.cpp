@@ -52,3 +52,15 @@ std::vector<std::string> split_str(const std::string& str, char separator) {
 
     return tokens;
 }
+
+void set_sdin_echo(bool enable)
+{
+    struct termios tty;
+    tcgetattr(STDIN_FILENO, &tty);
+    if (!enable)
+        tty.c_lflag &= ~ECHO;
+    else
+        tty.c_lflag |= ECHO;
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+}

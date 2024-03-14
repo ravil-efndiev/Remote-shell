@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
+#include <termios.h>
 
 #include <iostream>
 #include <vector>
@@ -35,3 +36,5 @@ void init_server(const ServerInfo& server);
 void connect_to_server(const ServerInfo& server);
 
 std::vector<std::string> split_str(const std::string& str, char separator);
+
+void set_sdin_echo(bool enable);
