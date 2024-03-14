@@ -1,4 +1,3 @@
-#include <fcntl.h>
 #include "shell.hpp"
 
 namespace {
@@ -34,10 +33,11 @@ std::string run_command(const std::string& command, FILE* shell) {
 }
 
 Signal run_shell(std::string& request, int client_fd, FILE* shell) {
-    auto tokens = split_str(request, ':');
+    auto colon_tokens = split_str(request, ':');
+    auto command_name = split_str(request, ' ')[0];
 
-    if (tokens[0] == "auth" && tokens.size() == 2) {
-        if (tokens[1] == "password123")
+    if (colon_tokens[0] == "auth" && colon_tokens.size() == 2) {
+        if (colon_tokens[1] == "password123")
         {
             send_response(client_fd, "Access to shell allowed");
             verified = true;
@@ -46,8 +46,11 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
             send_response(client_fd, "credentianls incorrect");
         }
     }
-    else if (request == "disconnect")
-    {
+    else if (std::find(forbidden_commands.begin(), forbidden_commands.end(), command_name) != forbidden_commands.end()) {
+        send_response(client_fd, "This command is not allowed");
+        return Signal::DEFAULT;
+    }
+    else if (request == "disconnect") {
         send_response(client_fd, "disconnecting from the server");
         close(client_fd);
     }
