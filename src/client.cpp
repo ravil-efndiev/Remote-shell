@@ -5,14 +5,14 @@ int main(int arc, char* argv[]) {
     connect_to_server(server);
     print_client_wellcome();
                        
-    char buffer[BUFFER_SIZE];
+    char* in_buffer;
+    std::string command_buffer;
     while (true) {
         // send request to the server
-        memset(buffer, 0, sizeof(buffer));
         std::cout << COL_GREEN << "server shell $ " << COL_DEFAULT;
-        std::cin.getline(buffer, sizeof(buffer));
+        std::getline(std::cin, command_buffer);
 
-        if (strncmp(buffer, "auth", 4) == 0) {
+        if (command_buffer == "auth") {
             std::string password;
 
             std::cout << "enter admin password: ";
@@ -29,7 +29,7 @@ int main(int arc, char* argv[]) {
             std::cout << "\n";
         }
         else {
-            ssize_t sent = send(server.fd, buffer, sizeof(buffer), 0);
+            ssize_t sent = send(server.fd, command_buffer.data(), command_buffer.size(), 0);
             if (sent < 0) {
                 perror("send request error");
                 break;
@@ -37,14 +37,22 @@ int main(int arc, char* argv[]) {
         }
 
         // get response from the server
-        memset(buffer, 0, sizeof(buffer));
-        ssize_t recieved = recv(server.fd, buffer, sizeof(buffer), 0);
-        if (recieved < 0) {
-            perror("get response error");
+        size_t data_size;
+        
+        ssize_t size_recieved = recv(server.fd, &data_size, sizeof(data_size), 0);
+        if (size_recieved < 0) {
+            perror("recieve error");
             break;
         }
 
-        std::cout << buffer << "\n";
+        in_buffer = new char[data_size];
+        ssize_t data_recieved = recv(server.fd, in_buffer, data_size, 0); 
+        if (data_recieved < 0) {
+            perror("recieve error");
+            break;
+        }
+        std::cout << in_buffer << "\n";
+        delete[] in_buffer;
     }
 
     return 0;

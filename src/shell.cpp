@@ -5,9 +5,11 @@ namespace {
 }
 
 void send_response(int client_fd, const std::string& data) {
-    ssize_t sent = send(client_fd, data.data(), data.size(), 0);
+    size_t data_size = data.size();
+    ssize_t size_sent = send(client_fd, &data_size, sizeof(data_size), 0);
+    ssize_t data_sent = send(client_fd, data.data(), data.size(), 0);
 
-    if (sent < 0) { 
+    if (size_sent < 0 || data_sent < 0) { 
         perror("server write error");
         exit(1);
     }
