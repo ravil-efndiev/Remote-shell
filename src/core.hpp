@@ -38,3 +38,5 @@ void connect_to_server(const ServerInfo& server);
 std::vector<std::string> split_str(const std::string& str, char separator);
 
 void set_stdin_echo(bool enable);
+
+std::string get_text_from_file(const std::string& path);

@@ -25,6 +25,7 @@ int main(int arc, char* argv[]) {
                 perror("send request error");
                 break;
             }
+            std::cout << "\n";
         }
         else {
             ssize_t sent = send(server.fd, buffer, sizeof(buffer), 0);

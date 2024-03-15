@@ -18,26 +18,39 @@ std::string run_command(const std::string& command, FILE* shell) {
     fflush(shell);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    std::ifstream dump ("/tmp/.cmddump", std::ios::in);
 
-    if (!dump) {
-        std::cerr << "dump file cannot be opened\n";
-        return "command error"; 
-    } 
-
-    std::stringstream ss;
-    ss << dump.rdbuf();
-    std::string result = ss.str();
-
-    return result.empty() ? "no output" : result;
+    try {
+        std::string dump = get_text_from_file("/tmp/.cmddump");
+        return dump.empty() ? "no output" : dump;
+    }
+    catch (std::runtime_error err) {
+        std::cerr << err.what() << "\n";
+        return "command error";
+    }
 }
 
 Signal run_shell(std::string& request, int client_fd, FILE* shell) {
     auto colon_tokens = split_str(request, ':');
-    auto command_name = split_str(request, ' ')[0];
+    std::string command_name = split_str(request, ' ')[0];
+    std::string password;
+    try {
+        std::string env = get_text_from_file(".env");
+        auto envlines = split_str(env, '\n');
+        for (const auto& line : envlines) {
+            auto vars = split_str(line, '=');
+            if (vars[0] == "PASSWORD") {
+                password = vars[1];
+                break;
+            }
+        }
+    } 
+    catch (std::runtime_error err) {
+        std::cerr << err.what() << "\n";
+        exit(1);
+    }
 
     if (colon_tokens[0] == "auth" && colon_tokens.size() == 2) {
-        if (colon_tokens[1] == "password123")
+        if (colon_tokens[1] == password)
         {
             send_response(client_fd, "Access to shell allowed");
             verified = true;
@@ -66,7 +79,7 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
             }
         }
         else {
-            send_response(client_fd, "you are not authenticated, use auth:`password` to authenticate");
+            send_response(client_fd, "you are not authenticated, use `auth` to get access");
         }
     }
     return Signal::DEFAULT;

@@ -64,3 +64,15 @@ void set_stdin_echo(bool enable)
 
     tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 }
+
+std::string get_text_from_file(const std::string& path)
+{
+    std::ifstream file (path, std::ios::in);
+    if (!file) {
+        throw std::runtime_error("cannot open file `" + path + "`");
+    }
+
+    std::stringstream ss;
+    ss << file.rdbuf();
+    return ss.str();
+}
