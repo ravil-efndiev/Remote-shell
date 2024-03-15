@@ -23,6 +23,12 @@
 const uint16_t PORT = 8080;
 const uint16_t BUFFER_SIZE = 1024;
 
+#define COL_DEFAULT "\033[0m"
+#define COL_RED     "\033[91m"
+#define COL_GREEN   "\033[92m"
+#define COL_YELLOW  "\033[93m"
+#define COL_BLUE    "\033[94m"
+
 struct ServerInfo {
     int fd = -1;
     struct sockaddr_in address;
@@ -40,3 +46,5 @@ std::vector<std::string> split_str(const std::string& str, char separator);
 void set_stdin_echo(bool enable);
 
 std::string get_text_from_file(const std::string& path);
+
+void print_client_wellcome();

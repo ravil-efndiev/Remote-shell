@@ -76,3 +76,15 @@ std::string get_text_from_file(const std::string& path)
     ss << file.rdbuf();
     return ss.str();
 }
+
+void print_client_wellcome() {
+    std::cout << R"( /$$$$$$$                                                     )" << "\n";    
+    std::cout << R"(| $$__  $$                                                    )" << "\n";    
+    std::cout << R"(| $$  \ $$  /$$$$$$  /$$$$$$/$$$$  /$$  /$$  /$$ /$$  /$$  /$$)" << "\n";    
+    std::cout << R"(| $$$$$$$/ /$$__  $$| $$_  $$_  $$| $$ | $$ | $$| $$ | $$ | $$)" << "\n";    
+    std::cout << R"(| $$__  $$| $$$$$$$$| $$ \ $$ \ $$| $$ | $$ | $$| $$ | $$ | $$)" << "\n";    
+    std::cout << R"(| $$  \ $$| $$_____/| $$ | $$ | $$| $$ | $$ | $$| $$ | $$ | $$)" << "\n";    
+    std::cout << R"(| $$  | $$|  $$$$$$$| $$ | $$ | $$|  $$$$$/$$$$/|  $$$$$/$$$$/)" << "\n";    
+    std::cout << R"(|__/  |__/ \_______/|__/ |__/ |__/ \_____/\___/  \_____/\___/ )" << "\n";    
+    std::cout << "Welocme to Remww remote shell, use auth to get access\n";
+}

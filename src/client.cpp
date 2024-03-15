@@ -3,12 +3,13 @@
 int main(int arc, char* argv[]) {
     ServerInfo server (INADDR_ANY);
     connect_to_server(server);
-
+    print_client_wellcome();
+                       
     char buffer[BUFFER_SIZE];
     while (true) {
         // send request to the server
         memset(buffer, 0, sizeof(buffer));
-        std::cout << "server shell $ ";
+        std::cout << COL_GREEN << "server shell $ " << COL_DEFAULT;
         std::cin.getline(buffer, sizeof(buffer));
 
         if (strncmp(buffer, "auth", 4) == 0) {
