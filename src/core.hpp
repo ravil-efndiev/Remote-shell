@@ -30,6 +30,8 @@ const std::string DISCONNECT_MSG = "disconnect";
 #define COL_YELLOW  "\033[93m"
 #define COL_BLUE    "\033[94m"
 
+#define ERR_MSG std::string("E") +
+
 struct ServerInfo {
     int fd = -1;
     struct sockaddr_in address;
@@ -38,9 +40,16 @@ struct ServerInfo {
     ServerInfo(in_addr_t addr);
 };
 
-void init_server(const ServerInfo& server);
+enum class Signal {
+    DEFAULT = 0,
+    SHUTDOWN,
+    DISCONNECT,
+    SKIP,
+};
 
+void init_server(const ServerInfo& server);
 void connect_to_server(const ServerInfo& server);
+int  accept_connection(const ServerInfo& server);
 
 std::vector<std::string> split_str(const std::string& str, char separator);
 

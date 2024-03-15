@@ -13,6 +13,7 @@ add_executable(
 add_executable(
     remw
     src/client.cpp 
+    src/cli.cpp
     src/core.cpp
 )
 

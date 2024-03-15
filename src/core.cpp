@@ -35,6 +35,15 @@ void connect_to_server(const ServerInfo& server) {
     }
 }
 
+int accept_connection(const ServerInfo& server) {
+    int cfd = accept(server.fd, (struct sockaddr*)&server.address, (socklen_t*)&server.addr_size);
+    if (cfd < 0) {
+        perror("client connection error");
+        exit(1);
+    }
+    return cfd;
+}
+
 std::vector<std::string> split_str(const std::string& str, char separator) {
     std::vector<std::string> tokens;
 

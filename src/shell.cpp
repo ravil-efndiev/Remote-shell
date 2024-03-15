@@ -27,7 +27,7 @@ std::string run_command(const std::string& command, FILE* shell) {
     }
     catch (std::runtime_error err) {
         std::cerr << err.what() << "\n";
-        return std::string(COL_RED) + "command error" + COL_DEFAULT;
+        return ERR_MSG "command error";
     }
 }
 
@@ -58,11 +58,11 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
             verified = true;
         } 
         else {
-            send_response(client_fd, std::string(COL_RED) + "credentianls incorrect"  + COL_DEFAULT);
+            send_response(client_fd, ERR_MSG "Credentianls incorrect");
         }
     }
     else if (std::find(forbidden_commands.begin(), forbidden_commands.end(), command_name) != forbidden_commands.end()) {
-        send_response(client_fd, std::string(COL_RED) + "This command is not allowed" + COL_DEFAULT);
+        send_response(client_fd, ERR_MSG "This command is not allowed");
         return Signal::DEFAULT;
     }
     else if (request == "disconnect") {
@@ -73,7 +73,7 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
     else {
         if (verified) {
             if (request == "shutdown") {
-                send_response(client_fd, "shutting down the server");
+                send_response(client_fd, "Shutting down the server");
                 return Signal::SHUTDOWN;
             }
             else {
@@ -82,7 +82,7 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
             }
         }
         else {
-            send_response(client_fd, std::string(COL_RED) + "you are not authenticated, use `auth` to get access" + COL_DEFAULT);
+            send_response(client_fd, ERR_MSG "You are not authenticated, use `auth` to get access");
         }
     }
     return Signal::DEFAULT;
@@ -111,4 +111,3 @@ void start_server_shell(int client_fd) {
 
     remove("/tmp/.cmddump");
 }
- 
