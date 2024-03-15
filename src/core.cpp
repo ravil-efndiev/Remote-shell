@@ -90,3 +90,12 @@ void print_client_wellcome() {
     std::cout << "Use " << COL_BLUE << "disconnect" << COL_DEFAULT << " to disconnect from the server\n";
     std::cout << "Use " << COL_BLUE << "auth" << COL_DEFAULT << " to get access to server shell\n";
 }
+
+void gen_env_file(const std::string& password) {
+    std::ofstream env (".env", std::ios::out);
+    if (!env) {
+        std::cerr << "cant create or open .env file\n";
+        exit(1);
+    }
+    env << "PASSWORD=" << password << '\n';
+}

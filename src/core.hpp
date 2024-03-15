@@ -49,3 +49,5 @@ void set_stdin_echo(bool enable);
 std::string get_text_from_file(const std::string& path);
 
 void print_client_wellcome();
+
+void gen_env_file(const std::string& password);
