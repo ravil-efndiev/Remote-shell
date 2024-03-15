@@ -86,5 +86,7 @@ void print_client_wellcome() {
     std::cout << R"(| $$  \ $$| $$_____/| $$ | $$ | $$| $$ | $$ | $$| $$ | $$ | $$)" << "\n";    
     std::cout << R"(| $$  | $$|  $$$$$$$| $$ | $$ | $$|  $$$$$/$$$$/|  $$$$$/$$$$/)" << "\n";    
     std::cout << R"(|__/  |__/ \_______/|__/ |__/ |__/ \_____/\___/  \_____/\___/ )" << "\n";    
-    std::cout << "Welocme to Remww remote shell, use auth to get access\n";
+    std::cout << "Welocme to Remww remote shell\n";
+    std::cout << "Use " << COL_BLUE << "disconnect" << COL_DEFAULT << " to disconnect from the server\n";
+    std::cout << "Use " << COL_BLUE << "auth" << COL_DEFAULT << " to get access to server shell\n";
 }

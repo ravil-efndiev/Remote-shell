@@ -66,7 +66,7 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
         return Signal::DEFAULT;
     }
     else if (request == "disconnect") {
-        send_response(client_fd, "disconnecting from the server");
+        send_response(client_fd, DISCONNECT_MSG);
         close(client_fd);
         return Signal::DISCONNECT;
     }

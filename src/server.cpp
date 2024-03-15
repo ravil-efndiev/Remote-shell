@@ -12,6 +12,7 @@ int main(int argc, char* argv[]) {
 
     start_server_shell(client_fd);
     close(client_fd);
+    close(server.fd);
 
     return 0;
 }

@@ -22,6 +22,7 @@
 
 const uint16_t PORT = 8080;
 const uint16_t BUFFER_SIZE = 1024;
+const std::string DISCONNECT_MSG = "disconnect";
 
 #define COL_DEFAULT "\033[0m"
 #define COL_RED     "\033[91m"

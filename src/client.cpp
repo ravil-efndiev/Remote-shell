@@ -51,9 +51,19 @@ int main(int arc, char* argv[]) {
             perror("recieve error");
             break;
         }
-        std::cout << in_buffer << "\n";
+        if (in_buffer == DISCONNECT_MSG) {
+            std::cout << "disconnecting from the server\n";
+            delete[] in_buffer;
+            break;
+        }
+        else {
+            std::cout << in_buffer << "\n";
+        }
+            
         delete[] in_buffer;
     }
+
+    close(server.fd);
 
     return 0;
 }
