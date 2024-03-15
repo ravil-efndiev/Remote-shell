@@ -73,7 +73,7 @@ Signal run_shell(std::string& request, int client_fd, FILE* shell) {
     else {
         if (verified) {
             if (request == "shutdown") {
-                send_response(client_fd, "Shutting down the server");
+                send_response(client_fd, DISCONNECT_MSG);
                 return Signal::SHUTDOWN;
             }
             else {
